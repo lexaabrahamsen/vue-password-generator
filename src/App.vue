@@ -54,6 +54,7 @@ const generatePassword = () => {
       readonly
     />
   </div>
+  <el-input v-model="generatedPassword" style="width: 240px" placeholder="Please input" />
   <div class="options">
     <label>
       <input type="checkbox" v-model="includeLowercase" /> Include Lowercase
@@ -62,21 +63,41 @@ const generatePassword = () => {
       <input type="checkbox" v-model="includeUppercase" /> Include Uppercase
     </label>
     <label>
-      <input  type="checkbox" v-model="includeNumbers" /> Include Numbers
+      <input type="checkbox" v-model="includeNumbers" /> Include Numbers
     </label>
     <label>
-      <input  type="checkbox" v-model="includeSymbols" /> Include Symbols
+      <input type="checkbox" v-model="includeSymbols" /> Include Symbols
     </label>
   </div>
+  <div>
+    <el-checkbox
+      v-model="includeLowercase"
+      label="includeLowercase"
+      size="large"
+    />
+    <el-checkbox
+      v-model="includeUppercase"
+      label="includeUppercase"
+      size="large"
+    />
+  </div>
+  <div class="my-2">
+    <el-checkbox v-model="includeNumbers" label="includeNumbers" />
+    <el-checkbox v-model="includeSymbols" label="includeSymbols" />
+  </div>
+
   <div class="strength">
     <label for="password-length">Password Length: {{ passwordLength }}</label>
-    <input 
+    <input
       id="password-length"
       type="range"
       min="6"
       max="32"
       v-model="passwordLength"
     />
+  </div>
+  <div class="slider-demo-block">
+    <el-slider v-model="passwordLength" />
   </div>
   <button @click="generatePassword">Generate Password</button>
 </template>
