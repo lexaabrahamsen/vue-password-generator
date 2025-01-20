@@ -1,16 +1,38 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+// Reactive state for user inputs
+const includeLowercase = ref(true);
+const includeUppercase = ref(false);
+const includeNumbers = ref(false);
+const includeSymbols = ref(false);
+const passwordLength = ref(12);
+
 // Reactive state for the generated password
 const generatedPassword = ref('');
 
 // Logic to generate a random password
 const generatePassword = () => {
-  const length = 12;
-  const charset =
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numberChars = '0123456789';
+  const symbolChars = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+  let charset = '';
+
+  if (includeLowercase.value) charset += lowercaseChars;
+  if (includeUppercase.value) charset += uppercaseChars;
+  if (includeNumbers.value) charset += numberChars;
+  if (includeSymbols.value) charset += symbolChars;
+
+  if (charset === '') {
+    generatedPassword.value = 'Please select at least one option!';
+    return;
+  }
+
   let password = '';
-  for (let i = 0; i < length; i++) {
+
+  for (let i = 0; i < passwordLength.value; i++) {
     const randomIndex = Math.floor(Math.random() * charset.length);
     password += charset[randomIndex];
   }
@@ -21,7 +43,7 @@ const generatePassword = () => {
 <template>
   <div class="password-generator">
     <h1>Password Generator</h1>
-    <p>Generate a secure password.</p>
+    <p>Generate a secure password with custom options.</p>
   </div>
   <div class="password-display">
     <lable for="generated-password">Generate Password</lable>
@@ -30,6 +52,30 @@ const generatePassword = () => {
       type="text"
       :value="generatedPassword"
       readonly
+    />
+  </div>
+  <div class="options">
+    <label>
+      <input type="checkbox" v-model="includeLowercase" /> Include Lowercase
+    </label>
+    <label>
+      <input type="checkbox" v-model="includeUppercase" /> Include Uppercase
+    </label>
+    <label>
+      <input  type="checkbox" v-model="includeNumbers" /> Include Numbers
+    </label>
+    <label>
+      <input  type="checkbox" v-model="includeSymbols" /> Include Symbols
+    </label>
+  </div>
+  <div class="strength">
+    <label for="password-length">Password Length: {{ passwordLength }}</label>
+    <input 
+      id="password-length"
+      type="range"
+      min="6"
+      max="32"
+      v-model="passwordLength"
     />
   </div>
   <button @click="generatePassword">Generate Password</button>
