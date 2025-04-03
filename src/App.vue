@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { CopyDocument } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 
 const includeLowercase = ref(true);
 const includeUppercase = ref(false);
@@ -35,6 +37,13 @@ const generatePassword = () => {
 
   generatedPassword.value = password;
 };
+
+// Copy Function
+const copyToClipboard = () => {
+  if (!generatedPassword.value || generatedPassword.value === 'Please select at least one option!') return;
+  navigator.clipboard.writeText(generatedPassword.value);
+  ElMessage.success('Password copied to clipboard');
+};
 </script>
 
 <template>
@@ -44,12 +53,17 @@ const generatePassword = () => {
       <label class="label-text">Generated Password</label>
       <el-input
         v-model="generatedPassword"
-        :placeholder="'Password'"
-        size="large"
-        class="password-input"
-        aria-label="where at"
         readonly
-      />
+        size="large"
+        placeholder="Password"
+        class="password-input"
+      >
+        <template #suffix>
+          <el-icon @click="copyToClipboard" style="cursor: pointer;">
+            <CopyDocument />
+          </el-icon>
+        </template>
+      </el-input>
 
       <div class="checkbox-group">
         <el-checkbox v-model="includeLowercase">Include Lowercase</el-checkbox>
@@ -179,8 +193,7 @@ h1 {
   font-weight: medium;
   letter-spacing: 2px;
   text-transform: uppercase;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  height: 48px;
   border-radius: 6px;
 }
 
