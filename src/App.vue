@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-// Reactive state for user inputs
 const includeLowercase = ref(true);
 const includeUppercase = ref(false);
 const includeNumbers = ref(false);
 const includeSymbols = ref(false);
 const passwordLength = ref(12);
-
-// Reactive state for the generated password
 const generatedPassword = ref('');
 
-// Logic to generate a random password
 const generatePassword = () => {
   const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
   const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -36,96 +32,159 @@ const generatePassword = () => {
     const randomIndex = Math.floor(Math.random() * charset.length);
     password += charset[randomIndex];
   }
+
   generatedPassword.value = password;
 };
 </script>
 
 <template>
-  <div class="password-generator">
+  <div class="app">
     <h1>Password Generator</h1>
-    <p>Generate a secure password with custom options.</p>
-  </div>
-  <div class="password-display">
-    <lable for="generated-password">Generate Password</lable>
-    <input
-      id="generated-password"
-      type="text"
-      :value="generatedPassword"
-      readonly
-    />
-  </div>
-  <el-input v-model="generatedPassword" style="width: 240px" placeholder="Please input" />
-  <div class="options">
-    <label>
-      <input type="checkbox" v-model="includeLowercase" /> Include Lowercase
-    </label>
-    <label>
-      <input type="checkbox" v-model="includeUppercase" /> Include Uppercase
-    </label>
-    <label>
-      <input type="checkbox" v-model="includeNumbers" /> Include Numbers
-    </label>
-    <label>
-      <input type="checkbox" v-model="includeSymbols" /> Include Symbols
-    </label>
-  </div>
-  <div>
-    <el-checkbox
-      v-model="includeLowercase"
-      label="includeLowercase"
-      size="large"
-    />
-    <el-checkbox
-      v-model="includeUppercase"
-      label="includeUppercase"
-      size="large"
-    />
-  </div>
-  <div class="my-2">
-    <el-checkbox v-model="includeNumbers" label="includeNumbers" />
-    <el-checkbox v-model="includeSymbols" label="includeSymbols" />
-  </div>
+    <el-card shadow="hover" class="card">
+      <label class="label-text">Generated Password</label>
+      <el-input
+        v-model="generatedPassword"
+        :placeholder="'Password'"
+        size="large"
+        class="password-input"
+        aria-label="where at"
+        readonly
+      />
 
-  <div class="strength">
-    <label for="password-length">Password Length: {{ passwordLength }}</label>
-    <input
-      id="password-length"
-      type="range"
-      min="6"
-      max="32"
-      v-model="passwordLength"
-    />
+      <div class="checkbox-group">
+        <el-checkbox v-model="includeLowercase">Include Lowercase</el-checkbox>
+        <el-checkbox v-model="includeUppercase">Include Uppercase</el-checkbox>
+        <el-checkbox v-model="includeNumbers">Include Numbers</el-checkbox>
+        <el-checkbox v-model="includeSymbols">Include Symbols</el-checkbox>
+      </div>
+
+      <div class="slider-section">
+        <label class="label-text">Password Length: {{ passwordLength }}</label>
+        <el-slider v-model="passwordLength" :min="6" :max="32" />
+      </div>
+
+      <el-button type="primary" class="generate-btn" @click="generatePassword">
+        Generate Password
+      </el-button>
+    </el-card>
   </div>
-  <div class="slider-demo-block">
-    <el-slider v-model="passwordLength" />
-  </div>
-  <button @click="generatePassword">Generate Password</button>
 </template>
 
 <style scoped>
-.password-generator {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-  font-family: Arial, sans-serif;
+/* App Background */
+.app {
+  background: #131A27;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Avenir', monospace;
+  flex-direction: column;
 }
 
-.password-display {
-  margin: 20px 0;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #007bff;
+/* Header */
+h1 {
   color: white;
-  border: none;
-  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
-button:hover {
-  background-color: #0056b3;
+/* Label text */
+.label-text {
+  color: #ffffff80;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Avenir', monospace;
+}
+
+/* Card */
+.card {
+  background: #202938;
+  border: 1px solid #405A7D;
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+/* Input */
+.password-input {
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  border-radius: 6px !important;
+}
+
+/* Placeholder at 50% opacity */
+:deep(.el-input__inner::placeholder) {
+  opacity: 0.5;
+  color: white;
+}
+
+/* Input normal text */
+:deep(.el-input__inner) {
+  color: white;
+  font-family: 'Avenir', monospace;
+}
+
+/* Checkbox section */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+/* Slider */
+.slider-section {
+  margin-top: 20px;
+}
+
+/* Input Border */
+:deep(.el-input__wrapper) {
+  border-color: #405A7D !important;
+  background-color: #263549;
+}
+
+/* Slider track and handle */
+:deep(.el-slider__bar) {
+  background-color: #12B982 !important;
+}
+:deep(.el-slider__button) {
+  border: 2px solid #12B982 !important;
+}
+
+/* Checkboxes */
+:deep(.el-checkbox__input.is-checked .el-checkbox__inner) {
+  background-color: #12B982 !important;
+  border-color: #12B982 !important;
+}
+:deep(.el-checkbox__label) {
+  color: white !important;
+  font-family: 'Avenir', monospace;
+}
+:deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
+  color: #12B982 !important;
+}
+
+/* Button */
+.generate-btn {
+  background-color: #12B982;
+  border: none;
+  margin-top: 40px;
+  font-family: 'Avenir', monospace;
+  width: 100%;
+  font-weight: medium;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 6px;
+}
+
+.generate-btn:hover {
+  background-color: #02926B;
 }
 </style>
