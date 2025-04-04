@@ -50,6 +50,7 @@ const copyToClipboard = () => {
   <div class="app">
     <h1>Password Generator</h1>
     <el-card shadow="hover" class="card">
+      <!-- <h1>Password Generator</h1> -->
       <label class="label-text">Generated Password</label>
       <el-input
         v-model="generatedPassword"
@@ -99,7 +100,9 @@ const copyToClipboard = () => {
 /* Header */
 h1 {
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 70px;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 /* Label text */
@@ -114,7 +117,7 @@ h1 {
 /* Card */
 .card {
   background: #202938;
-  border: 1px solid #405A7D;
+  border: 1px solid #2D3F57;
   border-radius: 12px;
   padding: 25px;
   max-width: 600px;
@@ -190,7 +193,7 @@ h1 {
   margin-top: 40px;
   font-family: 'Avenir', monospace;
   width: 100%;
-  font-weight: medium;
+  font-weight: bold;
   letter-spacing: 2px;
   text-transform: uppercase;
   height: 48px;
