@@ -48,7 +48,7 @@ const copyToClipboard = () => {
 
 <template>
   <div class="app">
-    <el-card shadow="hover" class="card">
+    <el-card shadow="never" class="card">
       <h1>Password Generator</h1>
       <label class="label-text">Generated Password</label>
       <el-input
