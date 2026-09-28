@@ -1,6 +1,32 @@
-# Vue 3 + TypeScript + Vite
+# Password Generator
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A small Vue 3 app for generating passwords with the length and character types you choose, then copying them in one click.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
-# vue-password-generator
+**[Live demo →](https://lexa-password-generator.netlify.app/)**
+
+![Password Generator](docs/screenshot.jpg)
+
+## Features
+
+- **Length from 6 to 32 characters**, set with a slider
+- **Character sets you can toggle:** lowercase, uppercase, numbers, and symbols
+- **One-click copy** to the clipboard, with a confirmation message
+
+## Built with
+
+Vue 3 (`<script setup>`) · TypeScript · Element Plus · Vite
+
+## Run locally
+
+```sh
+npm install
+npm run dev
+```
+
+Then open the URL Vite prints (usually http://localhost:5173).
+
+> Passwords are generated with `Math.random()`, which is fine for a demo. For real credentials, use a password manager or `crypto.getRandomValues()`.
+
+---
+
+Built by [Lexa Wong](https://www.lexawong.dev/)
